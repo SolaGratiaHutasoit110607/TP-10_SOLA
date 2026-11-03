@@ -27,6 +27,10 @@ public class Main {
         manager.addCharacter(
             new Character("Leonidas", CharacterType.WARRIOR, 6)
         );
+         manager.addCharacter(
+            new Character("Sola Gratia", CharacterType.MAGE, 8)
+        );
+        
 
         SwingUtilities.invokeLater(() -> {
             MainWindow window =
