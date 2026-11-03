@@ -1,127 +1,118 @@
-# CharacterManager — TP8 Implementasi GUI dan Analisis MVC
+# Character Manager
+
+**TP10 — Sprint 4: Theming**
 
 ## 1. Deskripsi Proyek
 
-CharacterManager adalah program berbasis Java yang digunakan untuk mengelola kumpulan objek karakter. Pada TP8, proyek dikembangkan dari program berbasis console menjadi aplikasi Graphical User Interface (GUI) menggunakan Java Swing.
+Character Manager merupakan aplikasi sederhana berbasis Java Swing untuk mengelola dan menampilkan daftar karakter. Setiap karakter memiliki informasi berupa nama, role, level, hit points (HP), dan attack power (ATK).
 
-Program ini menerapkan konsep Object-Oriented Programming (OOP), pemisahan Model dan View, serta pemrograman event-driven. Data karakter dikelola oleh `CharacterManager`, sedangkan `MainWindow` bertanggung jawab menampilkan daftar karakter dan statistik rata-rata level.
+Pada TP10 Sprint 4, aplikasi dikembangkan dengan pembaruan tampilan menggunakan sistem tema terpusat melalui kelas `AppTheme`. Tujuannya adalah membuat antarmuka lebih menarik, konsisten, dan mudah dikembangkan.
 
-## 2. Fitur Program
+## 2. Fitur Aplikasi
 
-### A. Implementasi GUI
+Fitur yang tersedia pada aplikasi Character Manager:
 
-- Menampilkan jendela utama menggunakan `JFrame`.
-- Menggunakan judul jendela `Character Manager v0.3`.
-- Menampilkan data karakter secara dinamis menggunakan perulangan `for` dan `JLabel`.
-- Menerima daftar karakter melalui constructor `MainWindow`.
-- Menjalankan GUI menggunakan `SwingUtilities.invokeLater()` pada `Main.java`.
+- Menampilkan daftar karakter.
+- Menampilkan nama, role, level, HP, dan ATK setiap karakter.
+- Memberikan warna kartu berbeda berdasarkan role karakter.
+- Menampilkan teks emas dan tebal untuk karakter dengan level 5 atau lebih.
+- Menampilkan informasi tambahan melalui tooltip.
+- Memberikan tampilan nonaktif pada karakter dengan level 1.
+- Mengatur tata letak kartu agar lebih rapi dan konsisten.
 
-### B. Perluasan Data Karakter
+## 3. Implementasi AppTheme
 
-Pada TP8, jumlah karakter ditambah dari tiga menjadi lima karakter. Dua karakter baru yang ditambahkan adalah:
+Kelas `AppTheme` dibuat pada package:
 
-- **Bima** — WARRIOR, Level 7.
-- **Luna** — MAGE, Level 5.
+`com.unpri.charactermanager.view`
 
-Penambahan karakter dilakukan melalui `Main.java` dengan memanggil method `addCharacter()` milik `CharacterManager`.
+Kelas ini berfungsi sebagai pusat konfigurasi tampilan aplikasi, meliputi:
 
-### C. Mini-Challenge: Statistik Rata-rata Level
+- Warna latar belakang aplikasi.
+- Warna teks utama dan teks terang.
+- Warna khusus untuk karakter dengan level tinggi.
+- Font judul dan font isi.
+- Border kartu karakter.
+- Fungsi `colorFor()` untuk menentukan warna berdasarkan role.
+- Fungsi `describe()` untuk memberikan deskripsi role.
 
-Fitur statistik rata-rata level ditambahkan pada `MainWindow.java` menggunakan `JLabel`.
+Dengan adanya `AppTheme`, pengaturan tampilan tidak perlu ditulis berulang kali di dalam `MainWindow`.
 
-Program menjumlahkan level seluruh karakter, kemudian membaginya dengan jumlah karakter yang tersedia. Hasil perhitungan diformat menggunakan dua angka desimal dengan tanda koma.
+## 4. Screenshot Tampilan Aplikasi
 
-Contoh hasil:
-- Sebelum penambahan karakter: 3 karakter, rata-rata level 4,00.
-- Sesudah penambahan karakter: 5 karakter, rata-rata level 4,80.
+![Screenshot Sebelum](screenshots/Sebelum.png)
+Tampilan aplikasi sebelum penerapan tema pada Sprint 4.
 
-Nilai statistik dihitung berdasarkan data karakter yang diterima oleh `MainWindow`, sehingga perubahan data yang diberikan melalui `Main.java` akan memengaruhi hasil perhitungan.
+### After — Character Manager v0.4
 
-## 3. Struktur Proyek
-TP-8_SOLA/
-├── README.md
-├── Screenshot/
-│   ├── TP8_Sebelum.png
-│   └── TP8_Sesudah.png
-└── src/
-    ├── Main.java
-    └── com/unpri/charactermanager/
-        ├── model/
-        │   ├── Character.java
-        │   ├── CharacterManager.java
-        │   └── CharacterType.java
-        └── view/
-            └── MainWindow.java
+Tampilan aplikasi setelah penerapan `AppTheme` pada Sprint 4.
 
-## 4. Konsep GUI, OOP, dan MVC yang Diterapkan
+![Screenshot Sesudah](screenshots/Sesudah.png)
 
-### A. JFrame dan JPanel
+Deskripsi: Pada versi terbaru, setiap kartu karakter memiliki warna berdasarkan role, teks emas tebal untuk level 5 ke atas, tooltip informasi, dan tampilan khusus untuk karakter level 1.
 
-`MainWindow` merupakan class yang mewarisi `JFrame`, sehingga dapat digunakan sebagai jendela utama aplikasi. `JPanel` digunakan sebagai wadah untuk mengatur komponen tampilan.
+## 5. Data Karakter
 
-### B. JLabel dan Tampilan Dinamis
+Aplikasi menggunakan enam karakter sebagai data pengujian:
 
-`JLabel` digunakan untuk menampilkan judul, informasi setiap karakter, dan statistik rata-rata level. Perulangan `for` membuat satu label untuk setiap objek karakter, sehingga penambahan karakter tidak memerlukan penulisan label secara manual satu per satu.
+| Nama | Role | Level |
+|---|---|---:|
+| Arjuna | WARRIOR | 5 |
+| Merlin | MAGE | 3 |
+| Athena | ARCHER | 4 |
+| Gatotkaca | WARRIOR | 7 |
+| Morgana | MAGE | 1 |
+| Leonidas | WARRIOR | 6 |
 
-### C. Model
+Karakter dengan level 5 atau lebih mendapatkan teks berwarna emas dan tebal. Sementara itu, Morgana dengan level 1 ditampilkan dalam keadaan nonaktif.
 
-Class `Character`, `CharacterManager`, dan `CharacterType` berada pada bagian model. `Character` menyimpan informasi karakter, `CharacterType` menentukan tipe karakter, sedangkan `CharacterManager` mengelola kumpulan karakter.
+## 6. Alasan Warna Diletakkan di AppTheme
 
-### D. View
+Pengaturan warna diletakkan di kelas `AppTheme`, bukan di kelas `Character`, karena warna merupakan bagian dari tampilan antarmuka, bukan data utama karakter.
 
-`MainWindow` berperan sebagai View karena bertanggung jawab menampilkan data karakter kepada pengguna melalui antarmuka Java Swing.
+Kelas `Character` sebaiknya hanya bertanggung jawab menyimpan informasi dan perilaku karakter. Dengan memisahkan konfigurasi tema dari model, perubahan warna atau font dapat dilakukan tanpa mengubah struktur data karakter.
 
-### E. Aliran Data dan Prinsip MVC
+Pemisahan ini juga membuat kode lebih terorganisasi, mengurangi pengulangan kode, dan memudahkan pemeliharaan aplikasi.
 
-Aliran data dimulai dari `Main.java`, yang membuat objek `CharacterManager` dan menambahkan karakter melalui method `addCharacter()`. Selanjutnya, daftar karakter diperoleh melalui `getAllCharacters()` dan diberikan kepada `MainWindow` melalui constructor. `MainWindow` menampilkan data karakter secara dinamis menggunakan `JLabel` dan menghitung rata-rata level untuk ditampilkan kepada pengguna. Alur ini menunjukkan pemisahan tanggung jawab antara pengelolaan data pada Model dan penyajian informasi pada View, sesuai prinsip dasar MVC.
+## 7. Dua Properti Tambahan
 
-### F. Event Dispatch Thread
+Selain pengaturan warna dan font, terdapat dua properti tambahan yang diterapkan pada kartu karakter:
 
-`SwingUtilities.invokeLater()` digunakan untuk menjadwalkan pembuatan dan penampilan GUI pada Event Dispatch Thread (EDT). Mekanisme ini membantu menjaga agar operasi antarmuka Swing dijalankan pada thread yang sesuai.
+### 1. Tooltip
 
-## 5. Dokumentasi Screenshot Output
+Tooltip digunakan untuk menampilkan informasi tambahan ketika kursor diarahkan ke kartu karakter. Informasi tersebut mencakup deskripsi role, HP, dan ATK.
 
-Screenshot berikut digunakan untuk membuktikan bahwa aplikasi berjalan dan statistik berubah setelah data karakter ditambahkan.
+Alasan penggunaan: Tooltip membantu pengguna memperoleh informasi tambahan tanpa membuat tampilan utama terlalu penuh.
 
-### Screenshot 1 — Sebelum Perubahan Data
+Implementasi menggunakan:
 
-![Output sebelum penambahan karakter](Screenshot/TP8_Sebelum.png)
+`setToolTipText()`
 
-Screenshot ini menunjukkan aplikasi dengan tiga karakter awal, yaitu Arjuna, Merlin, dan Athena. Statistik rata-rata level yang ditampilkan adalah 4,00.
+### 2. Tampilan Nonaktif untuk Level 1
 
-### Screenshot 2 — Sesudah Perubahan Data
+Karakter dengan level 1 ditampilkan dalam keadaan nonaktif menggunakan:
 
-![Output sesudah penambahan karakter](Screenshot/TP8_Sesudah.png)
+`setEnabled(false)`
 
-Screenshot ini menunjukkan aplikasi setelah penambahan Bima dan Luna, sehingga jumlah karakter menjadi lima. Statistik rata-rata level berubah menjadi 4,80.
+Alasan penggunaan: Properti ini memberikan pembeda visual untuk karakter level 1 dibandingkan karakter lainnya.
 
-Kedua screenshot tersebut menjadi bukti bahwa penambahan data karakter memengaruhi statistik yang ditampilkan pada GUI.
+## 8. Teknologi yang Digunakan
 
-## 6. Google Docs — Bagian D
+- Bahasa pemrograman: Java
+- GUI Framework: Java Swing
+- Konsep pemrograman: Object-Oriented Programming (OOP)
+- Arsitektur: Model-View-Controller (MVC)
+- Pengaturan tema: AppTheme
+- Layout Manager: BoxLayout
 
-Bagian D berisi analisis GUI dan MVC dengan panjang minimal 500 kata menggunakan kata-kata sendiri.
+## 9. Dokumentasi Part D
 
-Topik yang dibahas meliputi:
+Dokumentasi pembahasan teori Java Swing dan MVC untuk Part D dapat diakses melalui tautan berikut:
 
-1. Perbedaan program sekuensial berbasis console dan program event-driven berbasis GUI dengan analogi kehidupan sehari-hari.
-2. Alasan GUI Swing dijalankan menggunakan `SwingUtilities.invokeLater()` serta risiko jika mekanisme tersebut diabaikan.
-3. Identifikasi kesalahan dan perbaikan kode Java Swing yang menyebabkan jendela tidak muncul.
-4. Penjelasan relasi *is-a* pada `MainWindow extends JFrame` dan *has-a* pada `CharacterManager` yang memiliki daftar karakter.
-5. Penentuan tanggung jawab pengambilan data dan penampilan data berdasarkan prinsip MVC.
+**Google Docs:** [https://docs.google.com/document/d/1TvsUyntcHHmm_9-Lou-6bEuZz8Y6NI611JOY23A4jD4/edit?usp=sharing]
 
-**Link Google Docs Bagian D:**
+## 10. Kesimpulan
 
-[https://docs.google.com/document/d/18RHBzT30HZFWkxn-mPbZDtSBxyVVRqAcSK6tWVO_w68/edit?tab=t.0]
+Melalui TP10 Sprint 4, aplikasi Character Manager mengalami peningkatan dari sisi tampilan dan pengorganisasian kode. Penggunaan `AppTheme` membuat konfigurasi visual lebih terpusat, sedangkan penerapan tooltip dan tampilan nonaktif menambah informasi serta variasi visual pada kartu karakter.
 
-## 7. Teknologi
-
-- Bahasa pemrograman: Java.
-- IDE: Visual Studio Code.
-- GUI framework: Java Swing.
-- Komponen GUI: `JFrame`, `JPanel`, `JLabel`, dan `BoxLayout`.
-- Struktur data: `ArrayList`.
-- Konsep: OOP, MVC, dan event-driven programming.
-
-## 8. Kesimpulan
-
-Pada TP8, CharacterManager dikembangkan dari program berbasis console menjadi aplikasi GUI menggunakan Java Swing. Aplikasi menampilkan data karakter secara dinamis dan menyediakan statistik rata-rata level yang dihitung berdasarkan data yang tersedia. Penambahan dua karakter baru membuktikan bahwa tampilan dapat menyesuaikan jumlah data tanpa membuat label secara manual satu per satu. Penerapan `SwingUtilities.invokeLater()` membantu memastikan GUI dijalankan pada Event Dispatch Thread. Melalui tugas ini, konsep OOP, pemisahan Model dan View, serta dasar event-driven programming dapat dipraktikkan dalam aplikasi Java.
+Penerapan pemisahan Model dan View juga membantu menjaga struktur program agar lebih mudah dipahami, dirawat, dan dikembangkan pada tahap berikutnya.

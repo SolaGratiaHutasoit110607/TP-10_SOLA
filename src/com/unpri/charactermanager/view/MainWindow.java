@@ -1,93 +1,137 @@
 
 package com.unpri.charactermanager.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.BorderFactory;
-
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 import com.unpri.charactermanager.model.Character;
 
 public class MainWindow extends JFrame {
 
-    private JPanel mainPanel;
-    private ArrayList<Character> characterList;
+    private final JPanel mainPanel;
+    private final ArrayList<Character> characterList;
 
     public MainWindow(ArrayList<Character> characterList) {
-        super("Character Manager v0.3");
+        super("Character Manager v0.4");
 
         this.characterList = characterList;
+        this.mainPanel = new JPanel();
 
         initComponents();
 
-        setSize(600, 400);
+        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        setContentPane(scrollPane);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        pack();
+        setMinimumSize(new Dimension(500, 300));
         setLocationRelativeTo(null);
     }
 
     private void initComponents() {
-        mainPanel = new JPanel();
-
-        // Susun komponen dari atas ke bawah
         mainPanel.setLayout(
             new BoxLayout(mainPanel, BoxLayout.Y_AXIS)
         );
 
+        mainPanel.setBackground(AppTheme.BG_MAIN);
         mainPanel.setBorder(
-            BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            BorderFactory.createEmptyBorder(20, 20, 20, 20)
         );
 
-        // Judul daftar karakter
+        // Judul aplikasi
         JLabel titleLabel = new JLabel(
-            "=== Daftar Karakter (" + characterList.size() + ") ==="
+            "Daftar Karakter (" + characterList.size() + ")",
+            SwingConstants.CENTER
         );
+
+        titleLabel.setFont(AppTheme.FONT_TITLE);
+        titleLabel.setForeground(AppTheme.TEXT_MAIN);
+        titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+        titleLabel.setMaximumSize(
+            new Dimension(Integer.MAX_VALUE, 40)
+        );
+
         mainPanel.add(titleLabel);
+        mainPanel.add(Box.createVerticalStrut(20));
 
-        // Hitung total level dan tampilkan karakter secara dinamis
-        int totalLevel = 0;
-
+        // Menampilkan seluruh karakter
         for (Character c : characterList) {
-            String info = c.getName()
-                    + " | " + c.getType()
-                    + " | Lv." + c.getLevel()
-                    + " | HP:" + c.getHitPoints()
-                    + " | ATK:" + c.getAttackPower();
+            JLabel characterLabel = createCharacterLabel(c);
 
-            JLabel characterLabel = new JLabel(info);
+            characterLabel.setAlignmentX(CENTER_ALIGNMENT);
+
             mainPanel.add(characterLabel);
-
-            totalLevel += c.getLevel();
+            mainPanel.add(Box.createVerticalStrut(10));
         }
+    }
 
-        // Hitung rata-rata level
-        double averageLevel = 0.0;
+    private JLabel createCharacterLabel(Character c) {
 
-        if (!characterList.isEmpty()) {
-            averageLevel =
-                (double) totalLevel / characterList.size();
-        }
+        String info = c.getName()
+            + "  |  " + c.getType()
+            + "  |  Lv." + c.getLevel()
+            + "  |  HP: " + c.getHitPoints()
+            + "  |  ATK: " + c.getAttackPower();
 
-        // Format angka dengan dua desimal dan koma
-        DecimalFormatSymbols symbols =
-            DecimalFormatSymbols.getInstance(
-                Locale.forLanguageTag("id-ID")
+        // Teks berada tepat di tengah kartu
+        JLabel lbl = new JLabel(info, SwingConstants.CENTER);
+
+        lbl.setHorizontalAlignment(SwingConstants.CENTER);
+        lbl.setVerticalAlignment(SwingConstants.CENTER);
+
+        // Warna dan font kartu
+        lbl.setOpaque(true);
+        lbl.setBackground(AppTheme.colorFor(c.getType()));
+        lbl.setForeground(AppTheme.TEXT_LIGHT);
+        lbl.setFont(AppTheme.FONT_BODY);
+
+        lbl.setBorder(AppTheme.CARD_BORDER);
+
+        // Level 5 ke atas: teks emas dan tebal
+        if (c.getLevel() >= AppTheme.HIGH_LEVEL_THRESHOLD) {
+            lbl.setForeground(AppTheme.GOLD);
+            lbl.setFont(
+                AppTheme.FONT_BODY.deriveFont(Font.BOLD)
             );
+        }
 
-        DecimalFormat df = new DecimalFormat("0.00", symbols);
-
-        // Tampilkan statistik di bawah daftar karakter
-        JLabel averageLabel = new JLabel(
-            "Rata-rata Level: " + df.format(averageLevel)
+        // Tooltip informasi karakter
+        lbl.setToolTipText(
+            AppTheme.describe(c.getType())
+                + " | HP: " + c.getHitPoints()
+                + " | ATK: " + c.getAttackPower()
         );
 
-        mainPanel.add(averageLabel);
+        // Karakter level 1 ditampilkan sebagai nonaktif
+        if (c.getLevel() == 1) {
+            lbl.setEnabled(false);
+        }
 
-        add(mainPanel);
+        // Kursor berbentuk tangan
+        lbl.setCursor(
+            Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
+        );
+
+        // Ukuran kartu seragam
+        lbl.setPreferredSize(new Dimension(440, 42));
+        lbl.setMinimumSize(new Dimension(440, 42));
+        lbl.setMaximumSize(
+            new Dimension(Integer.MAX_VALUE, 42)
+        );
+
+        return lbl;
     }
 }
