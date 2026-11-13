@@ -17,6 +17,8 @@ public final class AppTheme {
     // Palet warna
     public static final Color BG_MAIN =
             Color.decode("#13131f");
+            public static final Color BG_STATUS  = Color.decode("#0d0d1a");
+            public static final Color TEXT_MUTED = Color.decode("#9d9dbf");
 
     public static final Color TEXT_MAIN =
             Color.decode("#dfe6e9");
