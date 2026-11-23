@@ -1,127 +1,98 @@
-# CharacterManager — TP8 Implementasi GUI dan Analisis MVC
 
-## 1. Deskripsi Proyek
+# Character Manager - TP14
+## Validasi Input dan Error Handling
 
-CharacterManager adalah program berbasis Java yang digunakan untuk mengelola kumpulan objek karakter. Pada TP8, proyek dikembangkan dari program berbasis console menjadi aplikasi Graphical User Interface (GUI) menggunakan Java Swing.
+**Nama:** [Nama Lengkap]  
+**NIM:** [NIM Kamu]  
+**Kelas:** [Kelas]  
+**Mata Kuliah:** Pemrograman Berorientasi Objek  
 
-Program ini menerapkan konsep Object-Oriented Programming (OOP), pemisahan Model dan View, serta pemrograman event-driven. Data karakter dikelola oleh `CharacterManager`, sedangkan `MainWindow` bertanggung jawab menampilkan daftar karakter dan statistik rata-rata level.
+---
 
-## 2. Fitur Program
+## 1. Deskripsi Program
 
-### A. Implementasi GUI
+Character Manager merupakan aplikasi berbasis Java Swing yang digunakan untuk mengelola data karakter. Aplikasi ini memungkinkan pengguna menambahkan karakter dengan mengisi nama, memilih role, dan menentukan level.
 
-- Menampilkan jendela utama menggunakan `JFrame`.
-- Menggunakan judul jendela `Character Manager v0.3`.
-- Menampilkan data karakter secara dinamis menggunakan perulangan `for` dan `JLabel`.
-- Menerima daftar karakter melalui constructor `MainWindow`.
-- Menjalankan GUI menggunakan `SwingUtilities.invokeLater()` pada `Main.java`.
+Pada TP14, aplikasi dikembangkan dengan menerapkan validasi input dan error handling agar data yang dimasukkan sesuai dengan aturan yang telah ditentukan.
 
-### B. Perluasan Data Karakter
+## 2. Implementasi Validasi Input
 
-Pada TP8, jumlah karakter ditambah dari tiga menjadi lima karakter. Dua karakter baru yang ditambahkan adalah:
+Validasi dilakukan pada dua lapisan, yaitu View dan Model.
 
-- **Bima** — WARRIOR, Level 7.
-- **Luna** — MAGE, Level 5.
+### A. Validasi pada View
 
-Penambahan karakter dilakukan melalui `Main.java` dengan memanggil method `addCharacter()` milik `CharacterManager`.
+View bertugas memeriksa input pengguna sebelum data diteruskan ke Model.
 
-### C. Mini-Challenge: Statistik Rata-rata Level
+Aturan validasi pada View:
+1. Nama karakter tidak boleh kosong.
+2. Panjang nama harus antara 3 sampai 20 karakter.
+3. Nama hanya boleh mengandung huruf dan spasi.
+4. Nama tidak boleh memiliki dua spasi berturut-turut.
+5. Nama karakter tidak boleh duplikat.
 
-Fitur statistik rata-rata level ditambahkan pada `MainWindow.java` menggunakan `JLabel`.
+### B. Validasi pada Model
 
-Program menjumlahkan level seluruh karakter, kemudian membaginya dengan jumlah karakter yang tersedia. Hasil perhitungan diformat menggunakan dua angka desimal dengan tanda koma.
+Model bertugas memastikan data karakter tetap valid meskipun dibuat tanpa melalui form.
 
-Contoh hasil:
-- Sebelum penambahan karakter: 3 karakter, rata-rata level 4,00.
-- Sesudah penambahan karakter: 5 karakter, rata-rata level 4,80.
+Aturan validasi pada Model:
+1. Nama karakter tidak boleh kosong.
+2. Role karakter tidak boleh null.
+3. Level karakter harus berada pada rentang 1–99.
+4. Role MAGE memiliki level maksimal 60.
+5. Jumlah karakter dalam daftar maksimal 20 karakter.
 
-Nilai statistik dihitung berdasarkan data karakter yang diterima oleh `MainWindow`, sehingga perubahan data yang diberikan melalui `Main.java` akan memengaruhi hasil perhitungan.
+## 3. Screenshot Pengujian
 
-## 3. Struktur Proyek
-TP-8_SOLA/
-├── README.md
-├── Screenshot/
-│   ├── TP8_Sebelum.png
-│   └── TP8_Sesudah.png
-└── src/
-    ├── Main.java
-    └── com/unpri/charactermanager/
-        ├── model/
-        │   ├── Character.java
-        │   ├── CharacterManager.java
-        │   └── CharacterType.java
-        └── view/
-            └── MainWindow.java
+### A. Pengujian Nama Kosong
 
-## 4. Konsep GUI, OOP, dan MVC yang Diterapkan
+![Error Nama Kosong](img/error-nama-kosong.png)
 
-### A. JFrame dan JPanel
+Keterangan: Pengujian dilakukan dengan membiarkan kolom nama kosong. Sistem menampilkan pesan kesalahan karena nama wajib diisi.
 
-`MainWindow` merupakan class yang mewarisi `JFrame`, sehingga dapat digunakan sebagai jendela utama aplikasi. `JPanel` digunakan sebagai wadah untuk mengatur komponen tampilan.
+### B. Pengujian Nama Duplikat
 
-### B. JLabel dan Tampilan Dinamis
+![Error Nama Duplikat](img/error-nama-duplikat.png)
 
-`JLabel` digunakan untuk menampilkan judul, informasi setiap karakter, dan statistik rata-rata level. Perulangan `for` membuat satu label untuk setiap objek karakter, sehingga penambahan karakter tidak memerlukan penulisan label secara manual satu per satu.
+Keterangan: Pengujian dilakukan dengan memasukkan nama karakter yang sudah terdaftar. Sistem menolak nama tersebut.
 
-### C. Model
+### C. Pengujian Penambahan Karakter Berhasil
 
-Class `Character`, `CharacterManager`, dan `CharacterType` berada pada bagian model. `Character` menyimpan informasi karakter, `CharacterType` menentukan tipe karakter, sedangkan `CharacterManager` mengelola kumpulan karakter.
+![Karakter Berhasil Ditambahkan](img/karakter-berhasil.png)
 
-### D. View
+Keterangan: Pengujian dilakukan dengan memasukkan nama, memilih role, dan menentukan level yang valid. Karakter berhasil ditambahkan ke daftar.
 
-`MainWindow` berperan sebagai View karena bertanggung jawab menampilkan data karakter kepada pengguna melalui antarmuka Java Swing.
+## 4. Tabel Pengujian
 
-### E. Aliran Data dan Prinsip MVC
+| No. | Input | Hasil yang Diharapkan | Hasil Aktual | Layer |
+|---|---|---|---|---|
+| 1 | Nama kosong | Ditolak | [Isi hasil] | View |
+| 2 | Nama 2 karakter | Ditolak | [Isi hasil] | View |
+| 3 | Nama mengandung angka | Ditolak | [Isi hasil] | View |
+| 4 | Nama duplikat | Ditolak | [Isi hasil] | View |
+| 5 | Nama dengan spasi ganda | Ditolak | [Isi hasil] | View |
+| 6 | MAGE level 61 | Ditolak | [Isi hasil] | Model |
+| 7 | MAGE level 60 | Diterima | [Isi hasil] | Model |
+| 8 | Karakter ke-21 | Ditolak | [Isi hasil] | Model |
+| 9 | Nama valid | Diterima | [Isi hasil] | View dan Model |
 
-Aliran data dimulai dari `Main.java`, yang membuat objek `CharacterManager` dan menambahkan karakter melalui method `addCharacter()`. Selanjutnya, daftar karakter diperoleh melalui `getAllCharacters()` dan diberikan kepada `MainWindow` melalui constructor. `MainWindow` menampilkan data karakter secara dinamis menggunakan `JLabel` dan menghitung rata-rata level untuk ditampilkan kepada pengguna. Alur ini menunjukkan pemisahan tanggung jawab antara pengelolaan data pada Model dan penyajian informasi pada View, sesuai prinsip dasar MVC.
+## 5. Penjelasan Kompromi Sementara
 
-### F. Event Dispatch Thread
+Dalam pengerjaan TP14, terdapat beberapa kompromi sementara untuk menjaga implementasi tetap sederhana.
 
-`SwingUtilities.invokeLater()` digunakan untuk menjadwalkan pembuatan dan penampilan GUI pada Event Dispatch Thread (EDT). Mekanisme ini membantu menjaga agar operasi antarmuka Swing dijalankan pada thread yang sesuai.
+1. Penggunaan ActionListener dibuat secara minimal agar proses penyimpanan karakter lebih mudah dipahami.
+2. CharacterFormPanel memanggil CharacterManager secara langsung untuk menambahkan karakter.
+3. Proses pembaruan daftar karakter dilakukan menggunakan method refreshList() setelah data berhasil ditambahkan.
 
-## 5. Dokumentasi Screenshot Output
+Kompromi tersebut digunakan untuk menyederhanakan implementasi pada tahap pembelajaran ini.
 
-Screenshot berikut digunakan untuk membuktikan bahwa aplikasi berjalan dan statistik berubah setelah data karakter ditambahkan.
+## 6. Google Docs - Analisis TP14
 
-### Screenshot 1 — Sebelum Perubahan Data
+Dokumen analisis TP14:
 
-![Output sebelum penambahan karakter](Screenshot/TP8_Sebelum.png)
+[Tempel link Google Docs di sini]
 
-Screenshot ini menunjukkan aplikasi dengan tiga karakter awal, yaitu Arjuna, Merlin, dan Athena. Statistik rata-rata level yang ditampilkan adalah 4,00.
+---
 
-### Screenshot 2 — Sesudah Perubahan Data
+## 7. Kesimpulan
 
-![Output sesudah penambahan karakter](Screenshot/TP8_Sesudah.png)
-
-Screenshot ini menunjukkan aplikasi setelah penambahan Bima dan Luna, sehingga jumlah karakter menjadi lima. Statistik rata-rata level berubah menjadi 4,80.
-
-Kedua screenshot tersebut menjadi bukti bahwa penambahan data karakter memengaruhi statistik yang ditampilkan pada GUI.
-
-## 6. Google Docs — Bagian D
-
-Bagian D berisi analisis GUI dan MVC dengan panjang minimal 500 kata menggunakan kata-kata sendiri.
-
-Topik yang dibahas meliputi:
-
-1. Perbedaan program sekuensial berbasis console dan program event-driven berbasis GUI dengan analogi kehidupan sehari-hari.
-2. Alasan GUI Swing dijalankan menggunakan `SwingUtilities.invokeLater()` serta risiko jika mekanisme tersebut diabaikan.
-3. Identifikasi kesalahan dan perbaikan kode Java Swing yang menyebabkan jendela tidak muncul.
-4. Penjelasan relasi *is-a* pada `MainWindow extends JFrame` dan *has-a* pada `CharacterManager` yang memiliki daftar karakter.
-5. Penentuan tanggung jawab pengambilan data dan penampilan data berdasarkan prinsip MVC.
-
-**Link Google Docs Bagian D:**
-
-[https://docs.google.com/document/d/18RHBzT30HZFWkxn-mPbZDtSBxyVVRqAcSK6tWVO_w68/edit?tab=t.0]
-
-## 7. Teknologi
-
-- Bahasa pemrograman: Java.
-- IDE: Visual Studio Code.
-- GUI framework: Java Swing.
-- Komponen GUI: `JFrame`, `JPanel`, `JLabel`, dan `BoxLayout`.
-- Struktur data: `ArrayList`.
-- Konsep: OOP, MVC, dan event-driven programming.
-
-## 8. Kesimpulan
-
-Pada TP8, CharacterManager dikembangkan dari program berbasis console menjadi aplikasi GUI menggunakan Java Swing. Aplikasi menampilkan data karakter secara dinamis dan menyediakan statistik rata-rata level yang dihitung berdasarkan data yang tersedia. Penambahan dua karakter baru membuktikan bahwa tampilan dapat menyesuaikan jumlah data tanpa membuat label secara manual satu per satu. Penerapan `SwingUtilities.invokeLater()` membantu memastikan GUI dijalankan pada Event Dispatch Thread. Melalui tugas ini, konsep OOP, pemisahan Model dan View, serta dasar event-driven programming dapat dipraktikkan dalam aplikasi Java.
+Melalui TP14, aplikasi Character Manager telah menerapkan validasi input pada lapisan View dan Model. Validasi tersebut membantu mencegah data yang tidak sesuai aturan masuk ke dalam sistem. Selain itu, penggunaan IllegalArgumentException membantu menangani kesalahan input dengan menampilkan pesan yang dapat dipahami pengguna.

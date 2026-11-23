@@ -1,3 +1,4 @@
+
 package com.unpri.charactermanager.view;
 
 import java.awt.Color;
@@ -13,9 +14,15 @@ import com.unpri.charactermanager.model.CharacterType;
  */
 public final class AppTheme {
 
-    // Palet warna
+    // ==============================
+    // PALET WARNA UTAMA
+    // ==============================
+
     public static final Color BG_MAIN =
             Color.decode("#13131f");
+
+    public static final Color BG_STATUS =
+            Color.decode("#1e1e2e");
 
     public static final Color TEXT_MAIN =
             Color.decode("#dfe6e9");
@@ -23,13 +30,30 @@ public final class AppTheme {
     public static final Color TEXT_LIGHT =
             Color.WHITE;
 
+    public static final Color TEXT_MUTED =
+            Color.decode("#8888a0");
+
     public static final Color GOLD =
             Color.decode("#fdcb6e");
 
-    // Batas level tinggi untuk Mini-Challenge
+    public static final Color ERROR =
+            Color.decode("#ff7675");
+
+    public static final Color SUCCESS =
+            Color.decode("#55efc4");
+
+
+    // ==============================
+    // PENGATURAN LEVEL KARAKTER
+    // ==============================
+
     public static final int HIGH_LEVEL_THRESHOLD = 5;
 
-    // Font
+
+    // ==============================
+    // PENGATURAN FONT
+    // ==============================
+
     public static final Font FONT_TITLE =
             new Font("SansSerif", Font.BOLD, 22);
 
@@ -39,17 +63,32 @@ public final class AppTheme {
     public static final Font FONT_MONO =
             new Font("Monospaced", Font.PLAIN, 13);
 
-    // Border dan padding kartu
+
+    // ==============================
+    // BORDER DAN PADDING
+    // ==============================
+
     public static final Border CARD_BORDER =
             BorderFactory.createEmptyBorder(8, 12, 8, 12);
+
+
+    // ==============================
+    // CONSTRUCTOR
+    // ==============================
 
     // Mencegah class dibuat menjadi objek
     private AppTheme() {
     }
 
-    // Warna kartu berdasarkan role karakter
+
+    // ==============================
+    // WARNA BERDASARKAN ROLE
+    // ==============================
+
     public static Color colorFor(CharacterType type) {
+
         switch (type) {
+
             case WARRIOR:
                 return Color.decode("#d63031");
 
@@ -64,9 +103,15 @@ public final class AppTheme {
         }
     }
 
-    // Deskripsi role untuk tooltip
+
+    // ==============================
+    // DESKRIPSI ROLE KARAKTER
+    // ==============================
+
     public static String describe(CharacterType type) {
+
         switch (type) {
+
             case WARRIOR:
                 return "Warrior: jarak dekat, HP tinggi";
 

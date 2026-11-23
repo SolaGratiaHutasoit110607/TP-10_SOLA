@@ -4,14 +4,11 @@ package com.unpri.charactermanager.model;
 import java.util.Objects;
 
 /**
- * Merepresentasikan satu karakter dalam aplikasi Character Manager.
- *
- * Menerapkan prinsip Encapsulation dengan menjadikan seluruh atribut
- * sebagai private dan menyediakan getter serta setter.
+ * Class Character untuk merepresentasikan karakter.
  */
 public class Character {
 
-    // Atribut instance
+    // Atribut
     private int id;
     private String name;
     private CharacterType type;
@@ -20,14 +17,10 @@ public class Character {
     private int attackPower;
     private int mana;
 
-    // Atribut static untuk menghitung seluruh objek Character
+    // Menghitung jumlah objek yang dibuat
     private static int totalCharacterCreated = 0;
 
-    /**
-     * Constructor untuk membuat karakter baru.
-     *
-     * HP dan attack power dihitung otomatis berdasarkan level.
-     */
+    // Constructor utama
     public Character(String name, CharacterType type, int level) {
 
         setName(name);
@@ -39,11 +32,7 @@ public class Character {
         totalCharacterCreated++;
     }
 
-    /**
-     * Constructor untuk memuat karakter dari database.
-     *
-     * Statistik karakter menggunakan nilai yang diberikan.
-     */
+    // Constructor untuk data database
     public Character(int id, String name, CharacterType type,
                      int level, int hitPoints, int attackPower) {
 
@@ -65,18 +54,17 @@ public class Character {
         totalCharacterCreated++;
     }
 
-    // Helper private
-
+    // Menghitung HP berdasarkan level
     private int calculateBaseHP() {
         return 100 + (level * 10);
     }
 
+    // Menghitung attack berdasarkan level
     private int calculateBaseAttack() {
         return 10 + (level * 5);
     }
 
     // Getter
-
     public int getId() {
         return id;
     }
@@ -105,20 +93,16 @@ public class Character {
         return mana;
     }
 
-    /**
-     * Mengembalikan jumlah seluruh objek Character
-     * yang telah dibuat selama program berjalan.
-     */
     public static int getTotalCharacterCreated() {
         return totalCharacterCreated;
     }
 
-    // Setter dengan validasi
-
+    // Setter ID
     public void setId(int id) {
         this.id = id;
     }
 
+    // Validasi nama
     public void setName(String name) {
 
         if (name == null || name.isBlank()) {
@@ -127,35 +111,49 @@ public class Character {
             );
         }
 
-        this.name = name;
+        this.name = name.trim();
     }
 
+    // Validasi role
     public void setType(CharacterType type) {
 
         if (type == null) {
             throw new IllegalArgumentException(
-                "Tipe karakter tidak boleh null"
+                "Role wajib dipilih"
+            );
+        }
+
+        if (type == CharacterType.MAGE && level > 60) {
+            throw new IllegalArgumentException(
+                "Karakter MAGE tidak boleh memiliki level di atas 60"
             );
         }
 
         this.type = type;
     }
 
+    // Validasi level
     public void setLevel(int level) {
 
-        if (level < 1) {
+        if (level < 1 || level > 99) {
             throw new IllegalArgumentException(
-                "Level minimal adalah 1"
+                "Level harus berada di antara 1-99"
+            );
+        }
+
+        if (type == CharacterType.MAGE && level > 60) {
+            throw new IllegalArgumentException(
+                "Karakter MAGE tidak boleh memiliki level di atas 60"
             );
         }
 
         this.level = level;
 
-        // Menghitung ulang statistik berdasarkan level
         this.hitPoints = calculateBaseHP();
         this.attackPower = calculateBaseAttack();
     }
 
+    // Setter HP
     public void setHitPoints(int hitPoints) {
 
         if (hitPoints < 0) {
@@ -167,6 +165,7 @@ public class Character {
         this.hitPoints = hitPoints;
     }
 
+    // Setter attack
     public void setAttackPower(int attackPower) {
 
         if (attackPower < 0) {
@@ -178,6 +177,7 @@ public class Character {
         this.attackPower = attackPower;
     }
 
+    // Setter mana
     public void setMana(int mana) {
 
         if (mana < 0) {
@@ -189,19 +189,12 @@ public class Character {
         this.mana = mana;
     }
 
-    // Method tambahan
-
-    /**
-     * Memeriksa apakah karakter masih hidup.
-     *
-     * @return true jika HP lebih dari 0
-     */
+    // Memeriksa apakah karakter masih hidup
     public boolean isAlive() {
         return hitPoints > 0;
     }
 
-    // toString
-
+    // Menampilkan informasi karakter
     @Override
     public String toString() {
 
@@ -216,12 +209,7 @@ public class Character {
                 '}';
     }
 
-    // equals
-
-    /**
-     * Membandingkan dua karakter berdasarkan nama.
-     * Perbandingan nama bersifat case-sensitive.
-     */
+    // Membandingkan karakter berdasarkan nama
     @Override
     public boolean equals(Object obj) {
 
@@ -235,13 +223,10 @@ public class Character {
 
         Character other = (Character) obj;
 
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(name, other.name);
     }
 
-    /**
-     * Menghasilkan hash code berdasarkan nama karakter.
-     * Konsisten dengan implementasi equals().
-     */
+    // Hash code berdasarkan nama
     @Override
     public int hashCode() {
         return Objects.hash(name);

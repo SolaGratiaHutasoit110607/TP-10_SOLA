@@ -2,10 +2,7 @@
 package com.unpri.charactermanager.model;
 
 /**
- * Enum yang mendefinisikan jenis karakter.
- *
- * Menggunakan enum agar tipe karakter hanya dapat
- * menggunakan nilai yang telah ditentukan.
+ * Menentukan jenis karakter yang tersedia.
  */
 public enum CharacterType {
 

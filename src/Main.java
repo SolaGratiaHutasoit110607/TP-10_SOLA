@@ -10,35 +10,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Membuat dan mengisi data karakter
+        // Membuat pengelola karakter
         CharacterManager manager = new CharacterManager();
 
-        manager.addCharacter(
-            new Character("Arjuna", CharacterType.WARRIOR, 5)
-        );
+        // Menambahkan karakter awal
+        manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
+        manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
+        manager.addCharacter(new Character("Athena", CharacterType.ARCHER, 4));
+        manager.addCharacter(new Character("Bima", CharacterType.WARRIOR, 7));
+        manager.addCharacter(new Character("Luna", CharacterType.MAGE, 5));
 
-        manager.addCharacter(
-            new Character("Merlin", CharacterType.MAGE, 3)
-        );
-
-        manager.addCharacter(
-            new Character("Athena", CharacterType.ARCHER, 4)
-        );
-
-        // Dua karakter tambahan untuk tugas TP8
-        manager.addCharacter(
-            new Character("Bima", CharacterType.WARRIOR, 7)
-        );
-
-        manager.addCharacter(
-            new Character("Luna", CharacterType.MAGE, 5)
-        );
-
-        // Menjalankan GUI pada Event Dispatch Thread
+        // Menjalankan tampilan aplikasi
         SwingUtilities.invokeLater(() -> {
-            MainWindow window =
-                new MainWindow(manager.getAllCharacters());
-
+            MainWindow window = new MainWindow(manager);
             window.setVisible(true);
         });
     }
