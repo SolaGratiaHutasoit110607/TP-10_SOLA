@@ -2,10 +2,10 @@
 # Character Manager - TP14
 ## Validasi Input dan Error Handling
 
-**Nama:** [Nama Lengkap]  
-**NIM:** [NIM Kamu]  
-**Kelas:** [Kelas]  
-**Mata Kuliah:** Pemrograman Berorientasi Objek  
+**Nama:** Sola Gratia Hutasoit
+**NIM:** 253303621286
+**Kelas:** SI pagi B
+**Mata Kuliah:** Java Visual
 
 ---
 
@@ -63,33 +63,36 @@ Keterangan: Pengujian dilakukan dengan memasukkan nama, memilih role, dan menent
 
 ## 4. Tabel Pengujian
 
+
 | No. | Input | Hasil yang Diharapkan | Hasil Aktual | Layer |
 |---|---|---|---|---|
-| 1 | Nama kosong | Ditolak | [Isi hasil] | View |
-| 2 | Nama 2 karakter | Ditolak | [Isi hasil] | View |
-| 3 | Nama mengandung angka | Ditolak | [Isi hasil] | View |
-| 4 | Nama duplikat | Ditolak | [Isi hasil] | View |
-| 5 | Nama dengan spasi ganda | Ditolak | [Isi hasil] | View |
-| 6 | MAGE level 61 | Ditolak | [Isi hasil] | Model |
-| 7 | MAGE level 60 | Diterima | [Isi hasil] | Model |
-| 8 | Karakter ke-21 | Ditolak | [Isi hasil] | Model |
-| 9 | Nama valid | Diterima | [Isi hasil] | View dan Model |
+| 1 | Nama kosong | Ditolak | Muncul pesan "Nama wajib diisi" | View |
+| 2 | Nama 2 karakter | Ditolak | Muncul pesan nama minimal 3 karakter | View |
+| 3 | Nama mengandung angka | Ditolak | Muncul pesan format nama tidak valid | View |
+| 4 | Nama duplikat | Ditolak | Muncul pesan "Nama sudah dipakai" | View |
+| 5 | Nama dengan spasi ganda | Ditolak | Muncul pesan kesalahan spasi ganda | View |
+| 6 | MAGE level 61 | Ditolak | Muncul pesan bahwa level MAGE maksimal 60 | Model |
+| 7 | MAGE level 60 | Diterima | Karakter MAGE berhasil ditambahkan ke daftar | Model |
+| 8 | Karakter ke-21 | Ditolak | Muncul pesan "Daftar karakter sudah mencapai batas maksimal 20" | Model |
+| 9 | Nama valid | Diterima | Karakter berhasil ditambahkan dan muncul pada daftar | View dan Model |
+
 
 ## 5. Penjelasan Kompromi Sementara
 
-Dalam pengerjaan TP14, terdapat beberapa kompromi sementara untuk menjaga implementasi tetap sederhana.
+Dalam pengerjaan TP14, terdapat beberapa kompromi sementara untuk menjaga implementasi program tetap sederhana dan mudah dipahami.
 
 1. Penggunaan ActionListener dibuat secara minimal agar proses penyimpanan karakter lebih mudah dipahami.
-2. CharacterFormPanel memanggil CharacterManager secara langsung untuk menambahkan karakter.
-3. Proses pembaruan daftar karakter dilakukan menggunakan method refreshList() setelah data berhasil ditambahkan.
+2. CharacterFormPanel memanggil CharacterManager secara langsung untuk menambahkan karakter tanpa melalui lapisan Controller.
+3. Pembaruan daftar karakter dilakukan menggunakan method refreshList() setelah karakter berhasil ditambahkan.
 
-Kompromi tersebut digunakan untuk menyederhanakan implementasi pada tahap pembelajaran ini.
+Kompromi ini digunakan untuk menyederhanakan proses implementasi selama tahap pembelajaran.
+
 
 ## 6. Google Docs - Analisis TP14
 
 Dokumen analisis TP14:
 
-[Tempel link Google Docs di sini]
+[https://docs.google.com/document/d/1dWkIAyR8GnuMyFX1BjWM6SGfRMlF5D0YzCHw3WlDsnQ/edit?usp=sharing]
 
 ---
 
